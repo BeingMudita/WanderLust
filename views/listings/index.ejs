@@ -1,0 +1,104 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<style>
+    .nav-item{
+        text-align: center;
+        margin-right: 1.5rem;
+        margin-top: 1rem;
+        opacity: 0.9;
+    }
+    .nav-item p{
+        font-size: 0.8rem;
+    }
+    .tax-switch{
+        border: 1px solid black;
+        border-radius: 1rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        display: flex;
+        align-items: center;
+        height: 3rem;
+    }
+    @media(max-width:992px){
+        .filter-nav{
+            display: none !important;
+        }
+    }
+
+
+</style>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light filter-nav">
+        <div class="container-fluid">
+            
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-bed"></i> <p>Rooms</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-mountain-city"></i> <p>Mountain</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-mountain-city"></i><p>Iconic Cities</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-umbrella-beach"></i> <p>Beaches</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-brands fa-fort-awesome"></i> <p>Castles</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-person-swimming"></i> <p>Amazing pools</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-sailboat"></i> <p>Boating</p></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa-solid fa-palette"></i> <p>Creative Space</p></a>
+                    </li>
+                </ul>
+    
+                <!-- Tax Switch Section -->
+                <div class="tax-switch">
+                    <div class="form-check-reverse form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+                      </div>
+                </div>
+        </div>
+    </nav>
+    
+
+    <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3">
+        <% for(let listing of allListing){ %>
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card col listing-card">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image" style="height: 20rem;">
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= listing.title%></h5>
+                        <p class="card-text">&#8377;<%= listing.price.toLocaleString('en-IN') %> /night<i class="tax-info"> + 18% GST</i></p>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+    </div>
+
+
+    
+</body>
+
+<script>
+    let taxSwitch = document.getElementById("flexSwitchCheckDefault"); 
+    taxSwitch.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for (let info of taxInfo) { 
+            if (info.style.display !== "inline") { 
+                info.style.display = "inline";
+            } else {
+                info.style.display = "none";
+            }
+        }
+    });
+</script>
+
+
